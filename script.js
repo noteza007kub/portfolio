@@ -1,16 +1,4 @@
-const waveform = document.getElementById("waveform");
-const barHeights = [20, 45, 70, 100, 65, 35, 85, 55, 25, 75];
-
-if (waveform) {
-  for (let i = 0; i < 48; i++) {
-    const bar = document.createElement("div");
-    bar.className = "wave-bar";
-    bar.style.height = `${barHeights[i % barHeights.length]}%`;
-    bar.style.animationDelay = `${i * 0.04}s`;
-    waveform.appendChild(bar);
-  }
-}
-
+﻿
 const revealItems = document.querySelectorAll(".reveal");
 
 const observer = new IntersectionObserver((entries) => {
@@ -30,15 +18,38 @@ const lightbox = document.getElementById("image-lightbox");
 const lightboxImage = lightbox ? lightbox.querySelector("img") : null;
 const lightboxClose = lightbox ? lightbox.querySelector(".lightbox-close") : null;
 let lastFocusedGalleryImage = null;
+let currentImageIndex = -1;
+
+function updateLightboxContent() {
+  if (!lightboxImage || currentImageIndex < 0 || currentImageIndex >= galleryImages.length) {
+    return;
+  }
+  const activeImage = galleryImages[currentImageIndex];
+  lightboxImage.src = activeImage.src;
+  lightboxImage.alt = activeImage.alt;
+}
+
+function showNextImage() {
+  if (galleryImages.length === 0) return;
+  currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+  updateLightboxContent();
+}
+
+function showPrevImage() {
+  if (galleryImages.length === 0) return;
+  currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+  updateLightboxContent();
+}
 
 function openLightbox(image) {
   if (!lightbox || !lightboxImage) {
     return;
   }
 
+  currentImageIndex = Array.from(galleryImages).indexOf(image);
   lastFocusedGalleryImage = image;
-  lightboxImage.src = image.src;
-  lightboxImage.alt = image.alt;
+  updateLightboxContent();
+  
   lightbox.classList.add("open");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.classList.add("lightbox-open");
@@ -58,6 +69,7 @@ function closeLightbox() {
   document.body.classList.remove("lightbox-open");
   lightboxImage.src = "";
   lightboxImage.alt = "";
+  currentImageIndex = -1;
 
   if (lastFocusedGalleryImage) {
     lastFocusedGalleryImage.focus();
@@ -94,7 +106,13 @@ if (lightboxClose) {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && lightbox && lightbox.classList.contains("open")) {
-    closeLightbox();
+  if (lightbox && lightbox.classList.contains("open")) {
+    if (event.key === "Escape") {
+      closeLightbox();
+    } else if (event.key === "ArrowRight") {
+      showNextImage();
+    } else if (event.key === "ArrowLeft") {
+      showPrevImage();
+    }
   }
 });

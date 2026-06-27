@@ -302,6 +302,15 @@ a {
   filter: grayscale(0) contrast(1.04);
 }
 
+.know-matter-card img {
+  transform: scale(1.1);
+}
+
+.know-matter-card:hover img {
+  transform: scale(1.15);
+  filter: grayscale(0) contrast(1.04);
+}
+
 .project-card div {
   position: absolute;
   inset: auto 0 0 0;

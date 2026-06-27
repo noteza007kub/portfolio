@@ -265,7 +265,8 @@ a {
 
 .project-card {
   position: relative;
-  min-height: 360px;
+  aspect-ratio: 9 / 16;
+  min-height: auto;
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -293,23 +294,7 @@ a {
   filter: grayscale(0) contrast(1.04);
 }
 
-.kangjor-card img {
-  transform: scale(1.42);
-}
 
-.kangjor-card:hover img {
-  transform: scale(1.49);
-  filter: grayscale(0) contrast(1.04);
-}
-
-.know-matter-card img {
-  transform: scale(1.1);
-}
-
-.know-matter-card:hover img {
-  transform: scale(1.15);
-  filter: grayscale(0) contrast(1.04);
-}
 
 .project-card div {
   position: absolute;
@@ -671,6 +656,10 @@ body.lightbox-open {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .four-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .gallery-heading {
     display: block;
     width: calc(100% - 48px);
@@ -757,7 +746,11 @@ body.lightbox-open {
   }
 
   .project-card {
-    min-height: 360px;
+    min-height: auto;
+  }
+
+  .four-card-grid {
+    grid-template-columns: 1fr;
   }
 
   .landscape-card {

@@ -366,14 +366,16 @@ a {
   font-size: 13px;
 }
 
-.streaming-card .project-trailer-link {
+.streaming-card .project-trailer-link,
+.video-card .project-trailer-link {
   position: absolute;
   inset: 0;
   z-index: 1;
   border-radius: inherit;
 }
 
-.streaming-card > div {
+.streaming-card > div,
+.video-card > div {
   z-index: 2;
   pointer-events: none;
 }
